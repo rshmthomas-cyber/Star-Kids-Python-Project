@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>STAR KIDS • Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: center;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    .completed {
+      text-decoration: none;
+      color: green;
+      font-weight: bold;
+    }
+    .task-item {
+      margin-bottom: 6px;
+      text-align: left;
+    }
+    .task-item a {
+      font-size: 0.9em;
+      margin-left: 5px;
+      color: blue;
+    }
+    .points-row {
+      font-weight: bold;
+      background-color: #fafafa;
+    }
+    /* Progress bar styles */
+    .progress {
+      background-color: #eee;
+      border-radius: 6px;
+      height: 20px;
+      width: 100%;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      text-align: center;
+      color: white;
+      font-size: 0.8em;
+      font-weight: bold;
+      line-height: 20px;
+    }
+    /* Fun kid-friendly colors */
+    .bar1 { background-color: #ff6b6b; }   /* red */
+    .bar2 { background-color: #4dabf7; }   /* blue */
+    .bar3 { background-color: #51cf66; }   /* green */
+    .bar4 { background-color: #f59f00; }   /* orange */
+    .bar5 { background-color: #845ef7; }   /* purple */
+
+    /* make mark-as-done link readable on any background */
+    .mark-btn {
+      background:#fff;
+      color:#000 !important;
+      padding:6px 10px;
+      border-radius:6px;
+      text-decoration:none;
+      border:1px solid #1e90ff;
+      font-weight:bold;
+      display:inline-block;
+      margin-left:6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <ul id="flash-messages">
+        {% for category, message in messages %}
+          <li class="flash-{{ category }}">{{ message }}</li>
+          {% if category == 'winner' %}
+            <!-- pass JS flag and message to client -->
+            <script>
+              window.__SHOW_CONFETTI__ = true;
+              window.__WINNER_MSG__ = {{ message|tojson }};
+            </script>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+
+  <h1>Welcome Kiddos! 🎉</h1>
+
+  <!-- Cleo & Cuquin Cartoon Banner -->
+  <div style="margin: 20px 0; text-align:center;">
+    <img src="{{ url_for('static', filename='cleo_cuquin_victory.png') }}"
+         alt="Cleo and Cuquin Victory"
+         style="max-width: 250px; border-radius:12px; margin:10px; box-shadow:0 4px 6px rgba(0,0,0,0.2);">
+  </div>
+
+  <!-- Reset Buttons -->
+  <div style="margin-bottom:16px;">
+    <!-- DAILY RESET -->
+    <a href="{{ url_for('reset_daily') }}"
+       style="background:#4dabf7;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;margin-right:10px;">
+       🔄 Reset Daily Tasks
+    </a>
+
+    <!-- WEEKLY RESET -->
+    <a href="{{ url_for('reset_weekly_points') }}"
+       style="background:#ff6b6b;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;">
+       🏆 End Week & Announce Winner
+    </a>
+  </div>
+
+  <h2>Kids & Tasks</h2>
+  <table>
+    <thead>
+      <tr>
+        {% for kid in kids %}
+          <th>{{ kid.name }} (Age {{ kid.age }})</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for kid in kids %}
+          <td>
+            {% if kid.tasks %}
+              {% for task in kid.tasks %}
+                <div class="task-item {% if task.completed %}completed{% endif %}">
+                  {{ task.description }} ({{ task.points }} pts)
+                  {% if not task.completed %}
+                    <a href="{{ url_for('complete_task', task_id=task.id) }}" class="mark-btn">✅ Mark as Done</a>
+                  {% else %}
+                    <span class="completed">✅ Completed</span>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            {% else %}
+              <em>No tasks yet</em>
+            {% endif %}
+            <div style="margin-top:8px;">
+              <a href="{{ url_for('add_task', kid_id=kid.id) }}">➕ Add Task</a>
+            </div>
+          </td>
+        {% endfor %}
+      </tr>
+
+      <!-- Daily Points with colorful progress bars -->
+      <tr class="points-row">
+        {% set max_points = kids|map(attribute='points')|max %}
+        {% for kid in kids %}
+          <td>
+            <div class="progress">
+              {% set percentage = (kid.points / max_points * 100) if max_points > 0 else 0 %}
+              <div class="progress-bar bar{{ loop.index }}" style="width: {{ percentage }}%">
+                {{ kid.points }} pts today
+              </div>
+            </div>
+          </td>
+        {% endfor %}
+      </tr>
+
+      <!-- Weekly Points with colorful progress bars -->
+      <tr class="points-row">
+        {% set max_weekly = kids|map(attribute='weekly_points')|max %}
+        {% for kid in kids %}
+          <td>
+            <div class="progress">
+              {% set percentage = (kid.weekly_points / max_weekly * 100) if max_weekly > 0 else 0 %}
+              <div class="progress-bar bar{{ loop.index }}" style="width: {{ percentage }}%">
+                {{ kid.weekly_points }} pts this week
+              </div>
+            </div>
+            <div style="margin-top: 5px; font-size: 0.9em; color: #333;">
+              ⭐ Weekly Total: {{ kid.weekly_points }} pts
+            </div>
+          </td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+
+  <p><a href="{{ url_for('add_kid') }}">➕ Add Kid</a></p>
+  <p><a href="{{ url_for('leaderboard') }}">🏆 View Leaderboard</a></p>
+  <p><a href="{{ url_for('logout') }}">🚪 Logout</a></p>
+
+  
+
+
+</body>
+</html>

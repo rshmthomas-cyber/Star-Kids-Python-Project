@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Task</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1>Add Task for {{ kid.name }}</h1>
+    <form method="POST">
+        <label>Description:</label>
+        <input type="text" name="description" required><br><br>
+        <label>Points:</label>
+        <input type="number" name="points" required><br><br>
+        <button type="submit">Add Task</button>
+    </form>
+    <p><a href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a></p>
+</body>
+</html>

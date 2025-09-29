@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yay! STAR KIDS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fef9f6;
+            margin: 0;
+            padding: 0;
+        }
+        .logo img {
+            width: 220px;   /* adjust size here */
+            margin-top: 20px;
+        }
+        h1 {
+            color: #ff4081;
+            font-size: 2.5rem;
+        }
+        .tagline {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        a {
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 8px;
+        }
+        a:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cleo & Cuquin Logo -->
+    <div class="logo">
+        <img src="{{ url_for('static', filename='cleo_cuquin_star.png') }}" 
+     alt="Cleo and Cuquin" 
+     style="max-width:400px; margin:20px auto; display:block;">
+
+
+    </div>
+
+    <!-- App Title -->
+    <h1>Yay! STAR KIDS 🎉</h1>
+
+    <!-- STAR KIDS Definition -->
+    <p class="tagline">⭐ Smart Tasks And Rewards for Kids Intelligent Daily System ⭐</p>
+
+    <!-- Navigation Links -->
+    <p>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+        <a href="/leaderboard">Leaderboard</a>
+    </p>
+
+</body>
+</html>

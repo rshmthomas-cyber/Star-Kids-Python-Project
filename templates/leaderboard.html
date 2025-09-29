@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🏆 Leaderboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fdf6e3;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #ff6b6b;
+    }
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: #4dabf7;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    .winner {
+      font-weight: bold;
+      color: #2d6a4f;
+    }
+  </style>
+</head>
+<body>
+  <h1>🏆 Leaderboard</h1>
+  <!-- Cleo & Cuquin Celebration Banner -->
+<div style="margin: 20px 0; text-align:center;">
+  <img src="{{ url_for('static', filename='cleo_cuquin_happy.png') }}"
+       alt="Cleo and Cuquin Celebration"
+       style="max-width: 300px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Kid</th>
+        <th>Daily Points</th>
+        <th>Weekly Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for kid in kids %}
+        <tr {% if loop.first %}class="winner"{% endif %}>
+          <td>{{ kid.name }}</td>
+          <td>{{ kid.points }}</td>
+          <td>{{ kid.weekly_points }}</td>
+        </tr>
+      {% else %}
+        <tr>
+          <td colspan="3"><em>No kids added yet</em></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p><a href="{{ url_for('dashboard') }}">⬅️ Back to Dashboard</a></p>
+</body>
+</html>

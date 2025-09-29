@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Winner History - Kid's Reward System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1>🏅 Weekly Winners</h1>
+
+    {% if winners %}
+        <ul>
+        {% for winner in winners %}
+            <li>
+                <strong>{{ winner.kid_name }}</strong> — {{ winner.points }} points ({{ winner.week }})
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No winners recorded yet.</p>
+    {% endif %}
+
+    <p>
+        <a href="{{ url_for('leaderboard') }}">⬅ Back to Leaderboard</a>
+    </p>
+</body>
+</html>
