@@ -31,12 +31,14 @@ venv\Scripts\activate  # On Windows
 
 
 ###3. Install dependencies
-```bashpip install -r requirements.txt
+```bash
+pip install -r requirements.txt
 ```
 
 
 ###4. Run the application
-```bashpython app.py
+```bashpython
+app.py
 ```
 
 
@@ -77,16 +79,21 @@ Kids Reward System
 
 
 
-🤝 Contribution
+
+
+###🤝 Contribution
 
 Contributions are welcome! Feel free to open an issue or submit a pull request.
 
-📜 License
 
-This project is licensed under the MIT License – see the LICENSE
- file for details.
 
-👩‍💻 Author
+###📜 License
+
+This project is licensed under the MIT License – see the LICENSE file for details.
+
+
+
+###👩‍💻 Author
 
 Reshma Thomas
 Made with ❤️ to motivate kids in a fun and engaging way.
