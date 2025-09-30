@@ -97,6 +97,8 @@ This project is licensed under the MIT License – see the LICENSE file for deta
 ###👩‍💻 Author
 
 Reshma Thomas
-Made with ❤️ to motivate kids in a fun and engaging way.
+
+
+###Made with ❤️ to motivate kids in a fun and engaging way.
 
 
