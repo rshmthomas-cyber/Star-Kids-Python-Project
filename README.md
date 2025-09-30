@@ -20,21 +20,26 @@ The app is styled with **CSS and HTML**, featuring **Cleo and Cuquin** cartoon c
 ```bash
 git clone https://github.com/rshmthomas-cyber/Star-Kids-Python-Project.git
 cd star-kids
+```
 
 ###2. Create a virtual environment (recommended)
-bashpython -m venv venv
+```bashpython -m venv venv
 source venv/bin/activate  # On Mac/Linux
 # OR
 venv\Scripts\activate  # On Windows
-
+```
 
 
 ###3. Install dependencies
-bashpip install -r requirements.txt
+```bashpip install -r requirements.txt
+```
 
 
 ###4. Run the application
-bashpython app.py
+```bashpython app.py
+```
+
+
 By default, the app runs at: 👉 http://127.0.0.1:5000
 
 
