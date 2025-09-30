@@ -48,6 +48,7 @@ By default, the app runs at: 👉 http://127.0.0.1:5000
 
 
 ### 📂 Project Structure 
+``` text
 Kids Reward System
 │
 ├── static/ # CSS, images, etc.
@@ -68,7 +69,7 @@ Kids Reward System
 ├── app.py # Flask application entry point
 ├── requirements.txt # Python dependencies
 └── README.md # Project documentation
-
+```
 ---
 
 📸 Screenshots 
